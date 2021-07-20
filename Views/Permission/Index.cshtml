@@ -1,0 +1,58 @@
+﻿@model PermissionViewModel
+<h1>Policy modules</h1>
+
+<div class="card">
+    <div class="card-body table-responsive">
+
+        <form class="mb-2" id="filterform">
+            <input asp-for="@Model.RoleId" type="hidden" />
+            <div>
+                <div class="form-row">
+                    <div class="col-auto">
+                        <select onchange="document.getElementById('filterform').submit()" asp-items="ViewBag.Modules" name="module" class="form-control"><option>All</option></select>
+                    </div>
+                </div>
+            </div>
+        </form>
+
+        <form asp-controller="permission" method="post" asp-action="Update" class="d-inline">
+            <input asp-for="@Model.RoleId" type="hidden" />
+            <table class="table table-sm table-striped" id="permissionTable">
+                <thead>
+                    <tr>
+                        <th>Type</th>
+                        <th>Permission</th>
+                        <th class="text-center">Status</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @for (int i = 0; i < Model.RoleClaims.Count(); i++)
+                    {
+                        <tr>
+                            <td>
+                                <input asp-for="@Model.RoleClaims[i].Type" type="hidden" />
+                                @Model.RoleClaims[i].Type
+                            </td>
+                            <td>
+                                <input asp-for="@Model.RoleClaims[i].Value" type="hidden" />
+                                @Model.RoleClaims[i].Value
+                            </td>
+                            <td class="text-center">
+                                <div class="custom-control custom-switch">
+                                    <input type="checkbox" class="custom-control-input" id="@($"index{i}")" asp-for="@Model.RoleClaims[i].Selected">
+                                    <label class="custom-control-label" for="@($"index{i}")"></label>
+                                </div>
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+            <div class="col-sm-12" style="padding: 20px 20px 0px 0px">
+                <button type="submit" id="save" class="btn btn-success">
+                    <i class="fa fa-check"></i>
+                    Save
+                </button>
+            </div>
+        </form>
+    </div>
+</div> 

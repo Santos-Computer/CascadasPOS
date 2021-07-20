@@ -1,0 +1,254 @@
+﻿<link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+
+<div class="mt-5">
+    <div class="row">
+        <div class="col-md-5">
+            <div class="form-row">
+                <div class="col-auto">
+                    <select class="form-control">
+                        <option>Name</option>
+                        <option>Code</option>
+                        <option>Barcode</option>
+                    </select>
+                </div>
+                <div class="col">
+                    <input class="form-control basicAutoComplete" id="search" placeholder="Search Product..." type="text" />
+                </div>
+            </div>
+            <div class="card card-body mt-2" style="height: 400px;">
+                <div class="table-responsive">
+                    <table class="table table-bordered product-table">
+                        <tr>
+                            <th>Product name</th>
+                            <th>Qty</th>
+                            <th class="text-right">Price</th>
+                            <th style="width: 100px;" class="text-right">Amount</th>
+                        </tr>
+                    </table>
+                </div>
+            </div>
+            <div class="card card-body mt-2" style="height: 150px;">
+                <table class="table-borderless table-sm">
+                    <tr>
+                        <td colspan="3" class="text-right">Sub total:</td>
+                        <td style="width: 100px;" class="text-right">$11.98</td>
+                    </tr>
+                    <tr>
+                        <td colspan="3" class="text-right">Tax:</td>
+                        <td class="text-right">$1.38</td>
+                    </tr>
+                    <tr>
+                        <td style="border-top: 1px dashed lightgray;" colspan="3" class="text-right">total:</td>
+                        <td style="border-top: 1px dashed lightgray;" class="text-right">$13.36</td>
+                    </tr>
+                </table>
+            </div>
+        </div>
+
+
+
+
+
+
+
+        <div class="col-md-7">
+            <div class="d-flex flex-column justify-content-between h-100">
+                <div>
+                    <button id="btn-delete" class="btn btn-xl btn-outline-danger my-button">
+                        Delete<br /><i class="fas fa-times"></i>
+                    </button>
+                    <button class="btn btn-xl btn-outline-primary my-button">
+                        Qty
+                        <br /><i class="fas fa-minus"></i>
+
+                        <i class="fas fa-plus"></i>
+                    </button>
+                    <button class="btn btn-xl btn-outline-warning my-button">
+                        Discount
+                        <br />
+                        <i class="fas fa-percent"></i>
+                    </button>
+                    <button class="btn btn-xl btn-outline-info my-button">
+                        Pay type
+                        <br>
+                        <i class="fas fa-money-check-alt"></i>
+                    </button>
+                    <button id="setting" class="btn btn-xl btn-outline-secondary my-button float-lg-right">
+                        Setting
+                        <br>
+                        <i class="fas fa-cog"></i>
+                    </button>
+                </div>
+
+
+
+
+
+                <div>
+                    <button class="btn btn-outline-secondary paytype-button">Cash</button>
+                    <button class="btn btn-outline-secondary paytype-button">Ath</button>
+                    <button class="btn btn-outline-secondary paytype-button">Credit</button>
+                    <button class="btn btn-outline-secondary paytype-button">Check</button>
+                </div>
+
+
+
+
+
+                <div>
+                    <div class="form-row mt-4">
+                        <div class="col-md-3">
+                            <input type="text" class="form-control mb-3">
+                            <div class="form-row">
+                                <div class="col-md-4">
+                                    <button class="btn btn-block btn-outline-secondary">1</button>
+                                </div>
+                                <div class="col-md-4">
+                                    <button class="btn btn-block btn-outline-secondary">2</button>
+                                </div>
+                                <div class="col-md-4">
+                                    <button class="btn btn-block btn-outline-secondary">3</button>
+                                </div>
+                            </div>
+                            <div class="form-row mt-2">
+                                <div class="col-md-4">
+                                    <button class="btn btn-block btn-outline-secondary">4</button>
+                                </div>
+                                <div class="col-md-4">
+                                    <button class="btn btn-block btn-outline-secondary">5</button>
+                                </div>
+                                <div class="col-md-4">
+                                    <button class="btn btn-block btn-outline-secondary">6</button>
+                                </div>
+                            </div>
+                            <div class="form-row mt-2">
+                                <div class="col-md-4">
+                                    <button class="btn btn-block btn-outline-secondary">7</button>
+                                </div>
+                                <div class="col-md-4">
+                                    <button class="btn btn-block btn-outline-secondary">8</button>
+                                </div>
+                                <div class="col-md-4">
+                                    <button class="btn btn-block btn-outline-secondary">9</button>
+                                </div>
+                            </div>
+                            <div class="form-row mt-2">
+                                <div class="col-md-4">
+                                    <button class="btn btn-block btn-outline-secondary">0</button>
+                                </div>
+                                <div class="col-md-4">
+                                    <button class="btn btn-block btn-outline-secondary">+</button>
+                                </div>
+                                <div class="col-md-4">
+                                    <button class="btn btn-block btn-outline-secondary">-</button>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                        </div>
+                    </div>
+                </div>
+
+                <div>
+                    <div class="form-row mt-auto">
+                        <div class="col-md-3">
+                            <button class="btn btn-danger btn-block mr-2" style="height: 90px;">
+                                Void order
+                                <br><i class="fas fa-ban"></i>
+                            </button>
+                        </div>
+                        <div class="col-md-3">
+                            <button class="btn btn-info btn-block" style="height: 90px;">
+                                Safe order
+                                <br><i class="far fa-share-square"></i>
+                            </button>
+                        </div>
+                        <div class="col-md-5 ml-auto">
+                            <button class="btn btn-success btn-block" style="height: 90px;">Payment</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+
+        </div>
+    </div>
+</div>
+
+@section Scripts{
+
+    <script src="https://cdn.jsdelivr.net/gh/xcash/bootstrap-autocomplete@v2.3.7/dist/latest/bootstrap-autocomplete.min.js"></script>
+    <script>
+
+        var products = [];
+        var selectedProductId = 0;
+
+        $(function () {
+            $('.basicAutoComplete').autoComplete({
+                minLength: 1,
+                requestThrottling: 500,
+                resolverSettings: {
+                    url: `@Url.Action("SearchProduct")`,
+                    queryKey: 'search'
+                }
+            });
+
+            $('.basicAutoComplete').on('autocomplete.select', function (evt, item) {
+
+                products.push(item);
+
+                $('.product-table').append(buildRow(item))
+
+                recalculate();
+
+                $('.basicAutoComplete').autoComplete('clear');
+            });
+        })
+
+        $(document).on('click', '.product-row', function () {
+
+            $('.product-row').removeClass('bg-lightgray');
+            selectedProductId = $(this).data('id');
+            $(this).addClass('bg-lightgray')
+        });
+
+        function recalculate() {
+
+            let total = 0;
+
+            $('.product-row').each(function (ix, el) {
+                total += $(el).data('price');
+
+                $(el).find('.total-amount').text(`$${parseFloat(total).toFixed(2)}`)
+            });
+        }
+
+        $('#btn-delete').click(function () {
+            if (selectedProductId != 0) {
+
+                $('.product-row').each(function (ix, el) {
+                    if ($(el).data('id') == selectedProductId) {
+                        $(el).remove();
+                    }
+                });
+
+                recalculate();
+            }
+        });
+
+        function buildRow(item) {
+            let rowString =
+            `
+                <tr class='product-row' data-price='${item.value.salesPrice}' data-id='${item.value.id}'>
+                    <td>${item.text}</td>
+                    <td>1</td>
+                    <td class="text-right">$${parseFloat(item.value.salesPrice).toFixed(2)}</td>
+                    <td class="text-right total-amount"></td>
+                </tr>
+            `;
+
+            return rowString;
+        }
+
+    </script>
+}

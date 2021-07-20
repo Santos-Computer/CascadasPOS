@@ -1,0 +1,87 @@
+﻿@model IEnumerable<Product>
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h1 class="font-weight-light">Products</h1>
+<hr />
+<p>
+    @if ((await AuthorizationService.AuthorizeAsync(User, Permissions.Product.Create)).Succeeded)
+    {
+
+        <button class="btn btn-xl btn-outline-success mr-3 mb-2" onclick="window.location='@Url.Action("Create")'">Create New <br /> <i class="fas fa-plus"></i></button>
+    }
+    @if ((await AuthorizationService.AuthorizeAsync(User, Permissions.Product.View)).Succeeded)
+    {
+
+        <button class="btn btn-xl btn-outline-secondary mr-3 mb-2" id="btn-detail" disabled>Details <br /> <i class="fas fa-info-circle"></i></button>
+    }
+    @if ((await AuthorizationService.AuthorizeAsync(User, Permissions.Product.Edit)).Succeeded)
+    {
+        <button class="btn btn-xl btn-outline-warning mr-3 mb-2" id="btn-edit" disabled onclick="window.location=`@Url.Action("Edit")/${selectedItemId}`">Edit <br /> <i class="far fa-edit"></i></button>
+    }
+    @if ((await AuthorizationService.AuthorizeAsync(User, Permissions.Product.Delete)).Succeeded)
+    {
+        <button class="btn btn-xl btn-outline-danger mr-3 mb-2" id="btn-delete" disabled>Delete <br /> <i class="far fa-trash-alt"></i></button>
+    }
+
+</p>
+
+@Html.AntiForgeryToken()
+
+<table class="table table-sm">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Code)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Name)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Image)
+            </th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr class="item-row" style="cursor:pointer" data-id="@item.Id" data-name="@item.Name">
+                <td>
+                    @Html.DisplayFor(modelItem => item.Code)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Name)
+                </td>
+                <td>
+                    <img style="max-height:50px" class="img-thumbnail" src="@Url.Content(item.Image)" alt="Product" />
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+<!--Modal-->
+<div id="modal-container">
+
+</div>
+
+<!-- Then put toasts within -->
+<div style="position: absolute; z-index:9999; bottom: 30px; right:30px;" class="toast" data-delay="5000" role="alert" aria-live="assertive" aria-atomic="true">
+    <div class="toast-header">
+        <svg class="bd-placeholder-img rounded mr-2" width="20" height="20" xmlns="http://www.w3.org/2000/svg" role="img" aria-label=" :  " preserveAspectRatio="xMidYMid slice" focusable="false"><title> </title><rect width="100%" height="100%" fill="#ff3f34"></rect><text x="50%" y="50%" fill="#dee2e6" dy=".3em"> </text></svg>
+        <strong class="mr-auto">POS System</strong>
+        <button type="button" class="ml-2 mb-1 close" data-dismiss="toast" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+        </button>
+    </div>
+    <div class="toast-body">
+        The product <span class="font-weight-bold" id="item-name"></span> has been deleted!
+    </div>
+</div>
+
+@section Scripts{
+    <script src="~/js/crud-operation.js" deleteLink="@Url.Action("DeleteConfirm")" modalDetailLink="@Url.Action("FillDetailModal")"></script>
+    <script></script>
+} 

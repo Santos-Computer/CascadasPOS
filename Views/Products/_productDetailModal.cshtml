@@ -1,0 +1,46 @@
+﻿@model Product
+
+<div class="modal fade" id="detailModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+    <div class="modal-lg modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header border-bottom-0">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <i aria-hidden="true" class="fas fa-times" style="font-size:22px; color:#ffae3b"></i>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="row">
+                    <div class="col-md-5">
+                        <img class="img-thumbnail shadow" style="min-height: 100px;" src="@Url.Content(Model.Image)" alt="Card image cap">
+                    </div>
+                    <div class="col-md-7">
+                        <dl class="form-row">
+                            <dt class=" col-sm-4">Description:</dt>
+                            <dd class="col-sm-8">@Model.Description</dd>
+                            <dt class=" col-sm-4">Cost:</dt>
+                            <dd class="col-sm-8">@Model.Cost</dd>
+                            <dt class=" col-sm-4">Sales price:</dt>
+                            <dd class="col-sm-8">@Model.SalesPrice</dd>
+                            <dt class=" col-sm-4">Category:</dt>
+                            <dd class="col-sm-8">@Model.Category.Name</dd>
+                            <dt class=" col-sm-4">Barcode:</dt>
+                            <dd class="col-sm-8">@Model.Barcode</dd>
+                            <dt class=" col-sm-4">Date created:</dt>
+                            <dd class="col-sm-8">@Model.DateCreated</dd>
+                            <dt class=" col-sm-4">Date updated:</dt>
+                            <dd class="col-sm-8">@Model.DateUpdated</dd>
+                            <dt class=" col-sm-4">Is active?:</dt>
+                            <dd class="col-sm-8">@Model.Active</dd>
+                            <dt class=" col-sm-4">Price include tax:</dt>
+                            <dd class="col-sm-8">@Model.PriceIncludeTax</dd>
+                            <dt class=" col-sm-4">Tax:</dt>
+                            <dd class="col-sm-8">@Model.Tax.Name</dd>
+                            <dt class=" col-sm-4">Unit of measure:</dt>
+                            <dd class="col-sm-8">@Model.UnitOfMeasure</dd>
+                        </dl>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

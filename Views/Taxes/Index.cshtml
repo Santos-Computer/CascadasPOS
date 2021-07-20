@@ -1,0 +1,122 @@
+﻿@model IEnumerable<Tax>
+
+@{
+    ViewData["Title"] = "Taxes";
+}
+
+<h1 class="font-weight-light">Taxes</h1>
+<hr />
+<p>
+    <button class="btn btn-xl btn-outline-success mr-3 mb-2" onclick="window.location='@Url.Action("Create")'">Create New <br /> <i class="fas fa-plus"></i></button>
+    <button class="btn btn-xl btn-outline-warning mr-3 mb-2" id="btn-edit" disabled onclick="window.location=`@Url.Action("Edit")/${selectedItemId}`">Edit <br /> <i class="far fa-edit"></i></button>
+    <button class="btn btn-xl btn-outline-secondary mr-3 mb-2" id="btn-detail" disabled>Details <br /> <i class="fas fa-info-circle"></i></button>
+    <button class="btn btn-xl btn-outline-danger mr-3 mb-2" id="btn-delete" disabled>Delete <br /> <i class="far fa-trash-alt"></i></button>
+</p>
+
+@Html.AntiForgeryToken()
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Name)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Percentage)
+            </th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr class="item-row" style="cursor:pointer" data-id="@item.Id" data-name="@item.Name">
+                <td>
+                    @Html.DisplayFor(modelItem => item.Name)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Percentage)
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+<!--Modal-->
+<div id="modal-container">
+
+</div>
+
+<!-- Then put toasts within -->
+<div style="position: absolute; z-index:9999; bottom: 30px; right:30px;" class="toast" data-delay="5000" role="alert" aria-live="assertive" aria-atomic="true">
+    <div class="toast-header">
+        <svg class="bd-placeholder-img rounded mr-2" width="20" height="20" xmlns="http://www.w3.org/2000/svg" role="img" aria-label=" :  " preserveAspectRatio="xMidYMid slice" focusable="false"><title> </title><rect width="100%" height="100%" fill="#ff3f34"></rect><text x="50%" y="50%" fill="#dee2e6" dy=".3em"> </text></svg>
+        <strong class="mr-auto">POS System</strong>
+        <button type="button" class="ml-2 mb-1 close" data-dismiss="toast" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+        </button>
+    </div>
+    <div class="toast-body">
+        The product <span class="font-weight-bold" id="tax-name"></span> has been deleted!
+    </div>
+</div>
+
+@section Scripts{
+    <script>
+
+        var selectedItemId = 0;
+        var selectedItemName = '';
+        var rowElement = null;
+
+        $(document).on('click', '.item-row', function () {
+
+            $('#btn-edit').attr('disabled', false);
+            $('#btn-detail').attr('disabled', false);
+            $('#btn-delete').attr('disabled', false);
+            selectedItemId = $(this).data('id');
+            selectedItemName = $(this).data('name');
+            rowElement = this;
+            $('.item-row').removeClass('bg-active');
+            $(this).addClass('bg-active');
+
+        });
+
+        $('#btn-detail').click(function () {
+
+            $.get('@Url.Action("FillDetailModal")', { id: selectedItemId }, function (data) {
+                $('#modal-container').html(data);
+                $('#detailModal').modal('show');
+            });
+        });
+
+        $('#btn-delete').click(function () {
+
+            let __RequestVerificationToken = $("input[name=__RequestVerificationToken]").val();
+
+            Swal.fire({
+                html: `
+                        <i style="font-size: 58px; color:3085d6; " class="fas fa-exclamation-triangle"></i>
+
+                        <p class="mt-4" style="font-size:18px">Do you want to</br>delete this tax?</p>
+                      `,
+                showCancelButton: true,
+                confirmButtonColor: '#ff5e57',
+                cancelButtonColor: '#575fcf',
+                confirmButtonText: '<i class="far fa-trash-alt"></i> Delete',
+                cancelButtonText: 'Cancel <i class="fas fa-times"></i>',
+                footer: 'You wont be able to recover it'
+            }).then((result) => {
+                if (result.isConfirmed) {
+
+                    $.post('@Url.Action("DeleteConfirmed")', { id: selectedItemId, __RequestVerificationToken }, function (deleted) {
+                        if (deleted) {
+                            $(rowElement).fadeOut();
+                            $('#tax-name').text(selectedItemName);
+                            $('.toast').toast('show');
+                        }
+                    })
+                }
+            })
+        });
+
+    </script>
+} 

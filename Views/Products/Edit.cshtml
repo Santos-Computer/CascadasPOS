@@ -1,0 +1,137 @@
+﻿@model Product
+
+@{
+    ViewData["Title"] = "Edit";
+}
+
+<h1>Edit</h1>
+
+<h4>Product</h4>
+<hr />
+<form asp-action="Edit" enctype="multipart/form-data">
+    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+    <input type="hidden" asp-for="@Model.Id" />
+    <div class="row">
+        <div class="col-md-2">
+            <div class="form-group">
+                <label asp-for="Code" class="control-label"></label>
+                <input asp-for="Code" class="form-control" />
+                <span asp-validation-for="Code" class="text-danger"></span>
+            </div>
+        </div>
+
+        <div class="col-md-5">
+            <div class="form-group">
+                <label asp-for="Name" class="control-label"></label>
+                <input asp-for="Name" class="form-control" />
+                <span asp-validation-for="Name" class="text-danger"></span>
+            </div>
+        </div>
+        <div class="col-md-5">
+            <div class="form-group">
+                <label asp-for="Description" class="control-label"></label>
+                <textarea asp-for="Description" class="form-control"></textarea>
+                <span asp-validation-for="Description" class="text-danger"></span>
+            </div>
+        </div>
+
+        <div class="col-md-2">
+            <div class="form-group">
+                <label asp-for="Barcode" class="control-label"></label>
+                <input asp-for="Barcode" class="form-control" />
+                <span asp-validation-for="Barcode" class="text-danger"></span>
+            </div>
+        </div>
+        <div class="col-md-2">
+            <div class="form-group">
+                <label asp-for="Cost" class="control-label"></label>
+                <input asp-for="Cost" class="form-control" />
+                <span asp-validation-for="Cost" class="text-danger"></span>
+            </div>
+        </div>
+
+        <div class="col-md-2">
+            <div class="form-group">
+                <label asp-for="SalesPrice" class="control-label"></label>
+                <input asp-for="SalesPrice" class="form-control" />
+                <span asp-validation-for="SalesPrice" class="text-danger"></span>
+            </div>
+        </div>
+
+        <div class="col-md-2">
+            <div class="form-group">
+                <label asp-for="UnitOfMeasure" class="control-label"></label>
+                <input asp-for="UnitOfMeasure" class="form-control" />
+                <span asp-validation-for="UnitOfMeasure" class="text-danger"></span>
+            </div>
+        </div>
+        <div class="col-auto">
+            <div class="form-group">
+                <label asp-for="TaxId" class="control-label"></label>
+                <select asp-for="TaxId" class="form-control" asp-items="ViewBag.TaxId"></select>
+            </div>
+        </div>
+        <div class="col-auto">
+            <div class="form-group">
+                <label asp-for="CategoryId" class="control-label"></label>
+                <select asp-for="CategoryId" class="form-control" asp-items="ViewBag.CategoryId"></select>
+            </div>
+        </div>
+    </div>
+
+    <div class="form-check-inline form-group col-md-4">
+        <div class="form-group form-check">
+            <label class="form-check-label">
+                <input class="form-check-input" asp-for="Active" /> @Html.DisplayNameFor(model => model.Active)
+            </label>
+        </div>
+        <div class="form-group form-check">
+            <label class="form-check-label">
+                <input class="form-check-input" asp-for="PriceIncludeTax" /> @Html.DisplayNameFor(model => model.PriceIncludeTax)
+            </label>
+        </div>
+    </div>
+
+    <div id="divImg" class="form-group">
+        <input asp-for="FormFile" required="required" type="file" style="display:none" />
+        <button id="btnTrigger" class="btn btn-block btn-sm btn-primary rounded-pill">Upload an Image</button>
+        <span asp-validation-for="FormFile" class="text-danger"></span>
+    </div>
+
+    <div class="form-group">
+        <img src="@Url.Content(Model.Image)" style="max-height: 100px;" alt="product" />
+    </div>
+
+    <div class="form-group">
+        <input type="submit" value="Edit" class="btn btn-primary" />
+    </div>
+</form>
+
+<div>
+    <a asp-action="Index">Back to List</a>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+
+    <script>
+        $('#btnTrigger').on('click', function (e) {
+            e.preventDefault();
+            $('#FormFile').trigger('click');
+        });
+        let imgFile = document.getElementById('FormFile');
+        $('#FormFile').change(function () {
+            if ($('img').length > 0) {
+                $('img').remove();
+            }
+            if (imgFile) {
+                let imageFile = imgFile.files[0];
+                let reader = new FileReader();
+                reader.addEventListener('load', function () {
+                    $('#divImg').after('<p><img style="max-height:150px" class="img-thumbnail mt-2" src=' + this.result + ' Alt="Img Preview" /></p>');
+                });
+                reader.readAsDataURL(imageFile);
+            }
+        });
+    </script>
+}
